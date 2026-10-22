@@ -1,1 +1,0 @@
-print2d_array(&arr[0][0]);
