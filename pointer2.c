@@ -12,14 +12,14 @@ int schlechteste_note(int noten[], int anzahl);
 
 void dateischreiben(const char *dateiname, int noten[],float (*f)(int[],int), int anzahl);
 
-void dateilesen(const char dateiname);
+void dateilesen(const char *dateiname);
 
 int main(void){
     int noten[100];
     int anzahl=0;
     char bed='\0';
     char dateioperator;
-    char dateieingabe[100];
+    char dateieingabe[100]="";
     //FILE *datei=fopen("test.txt","a");
 
     while(bed!='q'){
@@ -54,9 +54,13 @@ int main(void){
                 scanf("%99s", dateieingabe);
                 dateischreiben(dateieingabe,noten,durchschnitt,anzahl);
             }
-            /*else if(dateioperator=='r'){
-                dateilesen();
-            }*/
+            else if(dateioperator=='r'){
+                if(dateieingabe[0]=='\0'){
+                    printf("Welche Datei moechten Sie lesen?");
+                    scanf("%99s", dateieingabe);
+                }
+                dateilesen(dateieingabe);
+            }
             else{
                 printf("invalid command");
             }
@@ -133,6 +137,10 @@ void dateischreiben(const char *dateiname, int noten[],float (*f)(int[],int),int
         }
         break;
         case 'd':
+        if(f,(noten,anzahl==0)){
+            printf("Bitte Noten eingeben!\nq");
+            return;
+        }
         fprintf(datei,"%.2f\n",f(noten,anzahl));
         break;
        /* case 'b':
@@ -144,8 +152,17 @@ void dateischreiben(const char *dateiname, int noten[],float (*f)(int[],int),int
 
 }
 
-void dateilesen(const char dateiname){
-
+void dateilesen(const char *dateiname){
+    FILE *datei=fopen(dateiname,"r");
+    if (datei==NULL){
+        printf("Datei konnte nicht geoeffnet werden");
+        return;
+    }
+    char ch;
+    while ((ch = fgetc(datei)) != EOF) {
+        putchar(ch);
+    }
+    fclose(datei);
 }
 
 
